@@ -1,5 +1,6 @@
-package com.CaseStudy.Entities;
+package com.CaseStudy.Entities.Cart;
 
+import com.CaseStudy.Entities.Cart.Cart;
 import com.CaseStudy.Entities.Product.Product;
 
 import javax.persistence.*;

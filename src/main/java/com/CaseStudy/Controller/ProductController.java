@@ -33,15 +33,13 @@ public class ProductController {
 
     @PostMapping("/addProduct")
     public String addProduct(@RequestBody Product product) {
-        Product productToAdd = productService.makeProperProduct(product);
-        String result = productService.addProduct(productToAdd);
+        String result = productService.addProduct(product);
         return result;
     }
 
     @PutMapping("/update")
     public String modifyProduct(@RequestBody Product modifiedProduct) {
-        Product productToUpdate = productService.makeProperProduct(modifiedProduct);
-        String result = productService.updateProduct(productToUpdate);
+        String result = productService.updateProduct(modifiedProduct);
         return result;
     }
 

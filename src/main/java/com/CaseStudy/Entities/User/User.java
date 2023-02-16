@@ -4,8 +4,6 @@
  */
 package com.CaseStudy.Entities.User;
 
-import com.CaseStudy.Entities.Cart;
-
 import javax.persistence.*;
 
 /**

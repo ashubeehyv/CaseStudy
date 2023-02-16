@@ -4,8 +4,7 @@
  */
 package com.CaseStudy.dao;
 
-import com.CaseStudy.Entities.Cart;
-import com.CaseStudy.Entities.User.User;
+import com.CaseStudy.Entities.Cart.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

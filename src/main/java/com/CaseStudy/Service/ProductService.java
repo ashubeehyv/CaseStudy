@@ -31,6 +31,9 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private HelperService helperService;
+
     public Product getProductById(int id) {
         Product product = productRepository.findById(id).get();
         return product;
@@ -50,7 +53,8 @@ public class ProductService {
     }
 
     public String addProduct(Product product) {
-        if (!productRepository.existsByName(product.getName())) {
+        Product productToAdd = helperService.makeProperProduct(product);
+        if (!productRepository.existsByName(productToAdd.getName())) {
             Product result = productRepository.save(product);
             return "Product successfully added!!" + result;
         }
@@ -61,7 +65,8 @@ public class ProductService {
 }
 
     public String updateProduct(Product modifiedProduct) {
-        if (productRepository.existsByName(modifiedProduct.getName())) {
+        Product productToUpdate = helperService.makeProperProduct(modifiedProduct);
+        if (productRepository.existsByName(productToUpdate.getName())) {
             Product product = productRepository.findByName(modifiedProduct.getName());
             modifiedProduct.setProductId(product.getProductId());
             Product result = productRepository.save(modifiedProduct);
@@ -113,34 +118,6 @@ public class ProductService {
         return product;
     }
 
-    public void upDateCategoryTable(ProductCategory category){
-        List<Product> products = productRepository.findAllByCategory(category);
-        if (products.isEmpty()) {
-            productCategoryRepository.delete(category);
-        }
-    }
-
-    public void upDateSubCategoryTable(List<ProductSubcategory> subcategories){
-        for (ProductSubcategory subcategory : subcategories) {
-            ProductSubcategory products1 = productSubCategoryRepository.findById(subcategory.getSubCategoryId()).get();
-            if (products1.getProducts().isEmpty()) {
-                productSubCategoryRepository.delete(subcategory);
-            }
-        }
-    }
-
-    public void updateRelatedTables(ProductCategory category,List<ProductSubcategory> subcategories){
-        List<Product> products = productRepository.findAllByCategory(category);
-        if (products.isEmpty()) {
-            productCategoryRepository.delete(category);
-        }
-        for (ProductSubcategory subcategory : subcategories) {
-            ProductSubcategory products1 = productSubCategoryRepository.findById(subcategory.getSubCategoryId()).get();
-            if (products1.getProducts().isEmpty()) {
-                productSubCategoryRepository.delete(subcategory);
-            }
-        }
-    }
 
 
 }

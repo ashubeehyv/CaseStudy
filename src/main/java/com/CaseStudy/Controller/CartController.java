@@ -4,14 +4,12 @@
  */
 package com.CaseStudy.Controller;
 
-import com.CaseStudy.Entities.Cart;
-import com.CaseStudy.Entities.CartItem;
+import com.CaseStudy.Entities.Cart.Cart;
+import com.CaseStudy.Entities.Cart.CartItem;
 import com.CaseStudy.Entities.Quantity;
 import com.CaseStudy.Service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 /**
  *

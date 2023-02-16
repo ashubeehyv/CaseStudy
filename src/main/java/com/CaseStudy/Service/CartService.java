@@ -4,8 +4,8 @@
  */
 package com.CaseStudy.Service;
 
-import com.CaseStudy.Entities.Cart;
-import com.CaseStudy.Entities.CartItem;
+import com.CaseStudy.Entities.Cart.Cart;
+import com.CaseStudy.Entities.Cart.CartItem;
 import com.CaseStudy.Entities.Product.Product;
 import com.CaseStudy.dao.CartItemRepository;
 import com.CaseStudy.dao.CartRepository;
@@ -29,7 +29,10 @@ public class CartService {
     private CartItemRepository cartItemRepository;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
+
+    @Autowired
+    private HelperService helperService;
 
     @Autowired
     private ProductService productService;
@@ -39,37 +42,20 @@ public class CartService {
             return "Wrong entry no such user exist";
         }
         if (cartRepository.findByUserId(userId) == null) {
-            Cart cart = new Cart();
-            cart.setUserId(userId);
-            CartItem cartItem = new CartItem();
-            cartItem.setProduct(productService.getProductById(productId));
-            cartItem.setQuantity(1);
-            List<CartItem> products = new ArrayList<>();
-            products.add(cartItem);
-            cart.setCartItems(products);
+            Cart cart = helperService.createNewCart(userId,productId);
             Cart result = cartRepository.save(cart);
-            return "Product successfully added in the cart!!" + cart;
+            return "Product successfully added in the cart!!" + result;
         } else {
             Cart cart = cartRepository.findByUserId(userId);
-            List<CartItem> products = cart.getCartItems();
-            Product product = productService.getProductById(productId);
-            for (CartItem cartItem : products) {
-                if (cartItem.getProduct() == product) {
-                    cartItem.setQuantity(cartItem.getQuantity() + 1);
-                    cart.setCartItems(products);
-                    Cart result = cartRepository.save(cart);
-                    return "Product successfully added in the cart!!" + cart;
-                }
+            Cart updatedCart = helperService.updateCart(cart,productId,"addProduct");
+            if(cart.getCartId() == updatedCart.getCartId()){
+                Cart result = cartRepository.save(updatedCart);
+                return "Product successfully added in the cart!!" + result;
             }
-            CartItem cartItem = new CartItem();
-            cartItem.setQuantity(1);
-            cartItem.setProduct(product);
-            products.add(cartItem);
-            cart.setCartItems(products);
-            Cart result = cartRepository.save(cart);
-            return "Product successfully added in the cart!!" + cart;
 
-
+            Cart updatedCart1 = helperService.updateCart(cart,productId,"addNewProduct");
+            Cart result = cartRepository.save(updatedCart1);
+            return "Product successfully added in the cart!!" + result;
         }
 
 
@@ -113,15 +99,10 @@ public class CartService {
     public String removeProduct(int userId, int productId){
         Cart cart = cartRepository.findByUserId(userId);
         Product product = productService.getProductById(productId);
-        List<CartItem> products = cart.getCartItems();
-        for (CartItem cartItem : products) {
-            if (cartItem.getProduct() == product) {
-                products.remove(cartItem);
-                cart.setCartItems(products);
-                cartItemRepository.delete(cartItem);
-                Cart result = cartRepository.save(cart);
-                return product.getName() + " removed!!";
-            }
+        Cart updatedCart = helperService.updateCart(cart,productId,"removeProduct");
+        if(cart.getCartId() == updatedCart.getCartId()){
+            Cart result = cartRepository.save(updatedCart);
+            return product.getName() + " removed!!";
         }
         return "Product does not exist in the user cart!!";
     }
