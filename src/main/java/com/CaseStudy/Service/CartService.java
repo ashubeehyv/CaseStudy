@@ -12,7 +12,6 @@ import com.CaseStudy.dao.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,20 +61,17 @@ public class CartService {
     }
 
     public Cart getCartByUserId(int userId) {
-        Cart cart = cartRepository.findByUserId(userId);
-        return cart;
+        return cartRepository.findByUserId(userId);
     }
 
     public CartItem getCartItem(int cartItemId) {
-        CartItem cartItem = cartItemRepository.findById(cartItemId).get();
-        return cartItem;
+        return cartItemRepository.findById(cartItemId).get();
     }
 
     public CartItem changeQuantity(int cartItemId, int quantity) {
         CartItem cartItem = cartItemRepository.findById(cartItemId).get();
         cartItem.setQuantity(quantity);
-        CartItem result = cartItemRepository.save(cartItem);
-        return cartItem;
+        return cartItemRepository.save(cartItem);
     }
 
     public CartItem changeQuantity2(int userId, int productId, int quantity){
@@ -84,11 +80,11 @@ public class CartService {
         }
         Cart cart = cartRepository.findByUserId(userId);
         Product product = productService.getProductById(productId);
-        List<CartItem> products = cart.getCartItems();
-        for (CartItem cartItem : products) {
+        List<CartItem> cartItems = cart.getCartItems();
+        for (CartItem cartItem : cartItems) {
             if (cartItem.getProduct() == product) {
                 cartItem.setQuantity(quantity);
-                cart.setCartItems(products);
+                cart.setCartItems(cartItems);
                 Cart result = cartRepository.save(cart);
                 return cartItem;
             }

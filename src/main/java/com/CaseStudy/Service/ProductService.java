@@ -12,8 +12,6 @@ import com.CaseStudy.dao.ProductRepository;
 import com.CaseStudy.dao.ProductSubCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,21 +33,18 @@ public class ProductService {
     private HelperService helperService;
 
     public Product getProductById(int id) {
-        Product product = productRepository.findById(id).get();
-        return product;
+        return productRepository.findById(id).get();
 
     }
 
     public List<Product> getProductsByCategory(String categoryName) {
         ProductCategory category = productCategoryRepository.findByCategoryName(categoryName);
-        List<Product> products = productRepository.findAllByCategory(category);
-        return products;
+        return productRepository.findAllByCategory(category);
 
     }
     public List<Product> getProductsBySubCategory(String subCategoryName) {
         ProductSubcategory subCategory = productSubCategoryRepository.findBySubCategoryName(subCategoryName);
-        List<Product> products = subCategory.getProducts();
-        return products;
+        return subCategory.getProducts();
     }
 
     public String addProduct(Product product) {
@@ -90,34 +85,5 @@ public class ProductService {
         }
 
     }
-
-    public Product makeProperProduct(Product product){
-        //Category Fixing
-        ProductCategory category = product.getCategory();
-        if(!productCategoryRepository.existsByCategoryName(category.getCategoryName())){
-            product.setCategory(category);
-        }
-        else{
-            product.setCategory(productCategoryRepository.findByCategoryName(category.getCategoryName()));
-        }
-
-        //SubCategory Fixing
-        List<ProductSubcategory> subCategories = product.getSubcategories();
-        List<ProductSubcategory> subcategoriesToAdd = new ArrayList<>();
-        for(ProductSubcategory subCategory:subCategories){
-            if(productSubCategoryRepository.existsBySubCategoryName(subCategory.getSubCategoryName())){
-                subcategoriesToAdd.add(productSubCategoryRepository.findBySubCategoryName(subCategory.getSubCategoryName()));
-            }
-            else{
-                subcategoriesToAdd.add(subCategory);
-            }
-        }
-        product.setSubcategories(subcategoriesToAdd);
-
-
-        return product;
-    }
-
-
 
 }
