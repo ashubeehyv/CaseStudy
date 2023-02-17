@@ -4,13 +4,13 @@
  */
 package com.CaseStudy.Service;
 
-import com.CaseStudy.Entities.User.Address;
+
 import com.CaseStudy.Entities.User.User;
 import com.CaseStudy.dao.CartRepository;
 import com.CaseStudy.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import java.util.List;
+
 
 /**
  *
@@ -26,8 +26,7 @@ public class UserService {
     private CartRepository cartRepository;
 
     public User getUserById(int id) {
-        User user = userRepository.findById(id).get();
-        return user;
+        return userRepository.findById(id).get();
 
     }
 
@@ -44,10 +43,9 @@ public class UserService {
     }
 
     public String updateUser(int id, User modifiedUser) {
-        User user;
+
         if (userRepository.existsById(id)) {
-            user = modifiedUser;
-            User result = userRepository.save(user);
+            User result = userRepository.save(modifiedUser);
             return "User successfully updated!!" + result;
         } else {
             return "User does not exist, so it can't be updated!!";
