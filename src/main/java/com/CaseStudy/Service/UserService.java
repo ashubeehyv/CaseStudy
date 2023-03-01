@@ -9,6 +9,7 @@ import com.CaseStudy.Entities.User.User;
 import com.CaseStudy.dao.CartRepository;
 import com.CaseStudy.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 
@@ -18,6 +19,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class UserService {
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository userRepository;
@@ -30,8 +34,14 @@ public class UserService {
 
     }
 
+    public User getUserByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
     public String addUser(User user) {
         if (!userRepository.existsByEmail(user.getEmail())) {
+            user.setRole("ROLE_USER");
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             User result = userRepository.save(user);
             return "User successfully added!!" + result;
         }

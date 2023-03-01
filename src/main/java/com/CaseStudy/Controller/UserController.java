@@ -23,26 +23,22 @@ public class UserController {
 
     @GetMapping("/{id}")
     public User getUser(@PathVariable("id") int id) {
-        User result = userService.getUserById(id);
-        return result;
+        return userService.getUserById(id);
     }
 
     @PostMapping("/addUser")
     public String addUser(@RequestBody User user) {
-        String result = userService.addUser(user);
-        return result;
+        return userService.addUser(user);
     }
 
     @PutMapping("/update/{id}")
     public String modifyUser(@PathVariable("id") int id, @RequestBody User modifiedUser) {
-        String result = userService.updateUser(id, modifiedUser);
-        return result;
+        return userService.updateUser(id, modifiedUser);
     }
 
     @DeleteMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") int id) {
-        String result = userService.deleteUser(id);
-        return result;
+        return userService.deleteUser(id);
     }
     
 }

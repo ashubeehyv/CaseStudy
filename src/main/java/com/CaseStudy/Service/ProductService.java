@@ -7,11 +7,21 @@ package com.CaseStudy.Service;
 import com.CaseStudy.Entities.Product.Product;
 import com.CaseStudy.Entities.Product.ProductCategory;
 import com.CaseStudy.Entities.Product.ProductSubcategory;
+import com.CaseStudy.Helper.ProductFilter;
 import com.CaseStudy.dao.ProductCategoryRepository;
 import com.CaseStudy.dao.ProductRepository;
 import com.CaseStudy.dao.ProductSubCategoryRepository;
+
+
+import org.hibernate.Session;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Component;
+
+import javax.persistence.Tuple;
+import javax.persistence.criteria.CriteriaBuilder;
+
 import java.util.List;
 
 /**
@@ -86,4 +96,24 @@ public class ProductService {
 
     }
 
+    public List<Product> getAllProducts(){
+        return productRepository.findAll();
+    }
+
+    public List<ProductCategory> getAllCategories(){
+        return productCategoryRepository.findAll();
+    }
+
+    public List<ProductSubcategory> getAllSubCategories(){
+        return productSubCategoryRepository.findAll();
+    }
+
+    public List<Product> getFilteredProduct() {
+        return productRepository.getFilteredProducts();
+
+    }
+
+    public ProductCategory getCategory(String category){
+        return productCategoryRepository.findByCategoryName(category);
+    }
 }

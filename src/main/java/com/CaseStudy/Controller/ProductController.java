@@ -19,6 +19,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/product")
+@CrossOrigin("*")
 public class ProductController {
 
     @Autowired
@@ -27,38 +28,32 @@ public class ProductController {
 
     @GetMapping("getById/{id}")
     public Product getProduct(@PathVariable("id") int id) {
-        Product product = productService.getProductById(id);
-        return product;
+        return productService.getProductById(id);
     }
 
     @PostMapping("/addProduct")
     public String addProduct(@RequestBody Product product) {
-        String result = productService.addProduct(product);
-        return result;
+        return productService.addProduct(product);
     }
 
     @PutMapping("/update")
     public String modifyProduct(@RequestBody Product modifiedProduct) {
-        String result = productService.updateProduct(modifiedProduct);
-        return result;
+        return productService.updateProduct(modifiedProduct);
     }
 
     @GetMapping("/category/{categoryName}")
     public List<Product> getProductsByCategory(@PathVariable("categoryName") String categoryName) {
-        List<Product> products = productService.getProductsByCategory(categoryName);
-        return products;
+        return productService.getProductsByCategory(categoryName);
     }
 
     @DeleteMapping("/delete/{productId}")
     public String deleteProduct(@PathVariable("productId") int productId){
-        String result = productService.deleteProductById(productId);
-        return result;
+        return productService.deleteProductById(productId);
     }
 
     @GetMapping("/subcategory/{subCategoryName}")
     public List<Product> getProductsBySubCategory(@PathVariable("subCategoryName") String categoryName) {
-        List<Product> products = productService.getProductsBySubCategory(categoryName);
-        return products;
+        return productService.getProductsBySubCategory(categoryName);
     }
 
 }

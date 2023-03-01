@@ -25,43 +25,37 @@ public class CartController {
     //Add Items to the cart for the specific user
     @PostMapping("/{userId}/add/{productId}")
     public String addToCart(@PathVariable("userId") int userId,@PathVariable("productId") int productId) {
-        String result = cartService.addToCart(userId, productId);
-        return result;
+        return cartService.addToCart(userId, productId);
     }
 
     //To get the cart for the particular user
     @GetMapping("/{userId}/getCart")
     public Cart getCart(@PathVariable("userId") int userId){
-        Cart cart = cartService.getCartByUserId(userId);
-        return cart;
+        return cartService.getCartByUserId(userId);
     }
 
     //To get the cart item through cart item id
     @GetMapping("/getCartItem/{cartItemId}")
     public CartItem getCartItem(@PathVariable("cartItemId") int cartItemId){
-        CartItem cartItem = cartService.getCartItem(cartItemId);
-        return cartItem;
+        return cartService.getCartItem(cartItemId);
     }
 
     //Changing item quantity using cartItemId
     @PostMapping("/changeQuantity/{cartItemId}")
     public CartItem changeQuantity(@RequestBody Quantity data, @PathVariable("cartItemId") int cartItemId){
-        CartItem cartItem = cartService.changeQuantity(cartItemId, data.getQuantity());
-        return cartItem;
+        return cartService.changeQuantity(cartItemId, data.getQuantity());
     }
 
     //Changing item quantity using userId and productId
     @PostMapping("{userId}/changeQuantity/{productId}")
     public CartItem changeQuantity2(@RequestBody Quantity data, @PathVariable("userId") int userId, @PathVariable("productId") int productId){
-        CartItem cartItem = cartService.changeQuantity2(userId, productId, data.getQuantity());
-        return cartItem;
+        return cartService.changeQuantity2(userId, productId, data.getQuantity());
     }
 
     //Remove Product from cart
     @GetMapping("{userId}/remove/{productId}")
     public String removeProduct(@PathVariable("userId") int userId,@PathVariable("productId") int productId){
-        String result = cartService.removeProduct(userId,productId);
-        return result;
+        return cartService.removeProduct(userId,productId);
     }
 
 

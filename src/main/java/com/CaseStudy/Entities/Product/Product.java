@@ -6,6 +6,7 @@ package com.CaseStudy.Entities.Product;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  * @author beehyv
  */
 @Entity
-public class Product {
+public class Product implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,7 +23,8 @@ public class Product {
     private String name;
     
     private int price;
-    
+
+    private String imageUrl;
     private String detail;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -35,10 +37,11 @@ public class Product {
     public Product() {
     }
 
-    public Product(int productId, String name, int price, String detail, ProductCategory category, List<ProductSubcategory> subCategories) {
+    public Product(int productId, String name, int price, String imageUrl, String detail, ProductCategory category, List<ProductSubcategory> subCategories) {
         this.productId = productId;
         this.name = name;
         this.price = price;
+        this.imageUrl = imageUrl;
         this.detail = detail;
         this.category = category;
         this.subCategories = subCategories;
@@ -92,11 +95,24 @@ public class Product {
         this.subCategories = subCategories;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     @Override
     public String toString() {
-        return "Product{" + "productId=" + productId + ", name=" + name + ", price=" + price + ", detail=" + detail + ", category=" + category + ", subCategories=" + subCategories + '}';
+        return "Product{" +
+                "productId=" + productId +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", detail='" + detail + '\'' +
+                ", category=" + category +
+                ", subCategories=" + subCategories +
+                '}';
     }
-    
-    
 }

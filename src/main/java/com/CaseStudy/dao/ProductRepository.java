@@ -16,12 +16,14 @@ import java.util.List;
  *
  * @author beehyv
  */
-public interface ProductRepository extends JpaRepository<Product,Integer> {
+public interface ProductRepository extends JpaRepository<Product,Integer>, ProductCustomRepository{
 
     public List<Product> findAllByCategory(ProductCategory category);
 
     public boolean existsByName(String name);
 
-    public Product findByName(String name);
+    public Product findByName(String productName);
+
+
     
 }
