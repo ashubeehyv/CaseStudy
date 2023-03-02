@@ -7,11 +7,13 @@ package com.CaseStudy.Service;
 import com.CaseStudy.Entities.Cart.Cart;
 import com.CaseStudy.Entities.Cart.CartItem;
 import com.CaseStudy.Entities.Product.Product;
+import com.CaseStudy.Entities.User.User;
 import com.CaseStudy.dao.CartItemRepository;
 import com.CaseStudy.dao.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -36,32 +38,32 @@ public class CartService {
     @Autowired
     private ProductService productService;
 
-    public String addToCart(int userId, int productId) {
-        if (userService.getUserById(userId) == null) {
-            return "Wrong entry no such user exist";
-        }
+    public Cart addToCart(HttpServletRequest request, int productId) {
+        User user = helperService.fetchUserFromToken(request);
+        int userId = user.getUserId();
         if (cartRepository.findByUserId(userId) == null) {
             Cart cart = helperService.createNewCart(userId,productId);
             Cart result = cartRepository.save(cart);
-            return "Product successfully added in the cart!!" + result;
+            return result;
         } else {
             Cart cart = cartRepository.findByUserId(userId);
             Cart updatedCart = helperService.updateCart(cart,productId,"addProduct");
             if(cart.getCartId() == updatedCart.getCartId()){
                 Cart result = cartRepository.save(updatedCart);
-                return "Product successfully added in the cart!!" + result;
+                return result;
             }
 
             Cart updatedCart1 = helperService.updateCart(cart,productId,"addNewProduct");
             Cart result = cartRepository.save(updatedCart1);
-            return "Product successfully added in the cart!!" + result;
+            return result;
         }
 
 
     }
 
-    public Cart getCartByUserId(int userId) {
-        return cartRepository.findByUserId(userId);
+    public Cart getCart(HttpServletRequest request) {
+        User user = helperService.fetchUserFromToken(request);
+        return cartRepository.findByUserId(user.getUserId());
     }
 
     public CartItem getCartItem(int cartItemId) {
@@ -92,15 +94,17 @@ public class CartService {
         return null;
     }
 
-    public String removeProduct(int userId, int productId){
+    public Cart removeProduct(HttpServletRequest request, int productId){
+        User user = helperService.fetchUserFromToken(request);
+        int userId = user.getUserId();
         Cart cart = cartRepository.findByUserId(userId);
         Product product = productService.getProductById(productId);
         Cart updatedCart = helperService.updateCart(cart,productId,"removeProduct");
         if(cart.getCartId() == updatedCart.getCartId()){
             Cart result = cartRepository.save(updatedCart);
-            return product.getName() + " removed!!";
+            return result;
         }
-        return "Product does not exist in the user cart!!";
+        return cart;
     }
 
 }

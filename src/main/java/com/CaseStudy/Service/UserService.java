@@ -6,6 +6,8 @@ package com.CaseStudy.Service;
 
 
 import com.CaseStudy.Entities.User.User;
+import com.CaseStudy.Helper.LoginCredentials;
+import com.CaseStudy.Helper.SignupData;
 import com.CaseStudy.dao.CartRepository;
 import com.CaseStudy.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,18 +40,21 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public String addUser(User user) {
-        if (!userRepository.existsByEmail(user.getEmail())) {
+    public LoginCredentials addUser(SignupData signupData) {
+        System.out.println(signupData);
+        if (!userRepository.existsByEmail(signupData.getEmail())) {
+            User user = new User();
+            user.setName(signupData.getName());
+            user.setEmail(signupData.getEmail());
             user.setRole("ROLE_USER");
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setPassword(passwordEncoder.encode(signupData.getPassword()));
             User result = userRepository.save(user);
-            return "User successfully added!!" + result;
+            return new LoginCredentials(signupData.getEmail(),signupData.getPassword());
         }
         else{
-            return "User all ready exist!!";
+            return new LoginCredentials();
         }
 
-        
     }
 
     public String updateUser(int id, User modifiedUser) {

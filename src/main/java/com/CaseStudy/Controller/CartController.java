@@ -9,7 +9,11 @@ import com.CaseStudy.Entities.Cart.CartItem;
 import com.CaseStudy.Entities.Quantity;
 import com.CaseStudy.Service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -17,21 +21,22 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/cart")
+@CrossOrigin("*")
 public class CartController {
     
     @Autowired
     private CartService cartService;
 
     //Add Items to the cart for the specific user
-    @PostMapping("/{userId}/add/{productId}")
-    public String addToCart(@PathVariable("userId") int userId,@PathVariable("productId") int productId) {
-        return cartService.addToCart(userId, productId);
+    @GetMapping("/add/{productId}")
+    public Cart addToCart(HttpServletRequest request,@PathVariable("productId") int productId) {
+        return cartService.addToCart(request, productId);
     }
 
     //To get the cart for the particular user
-    @GetMapping("/{userId}/getCart")
-    public Cart getCart(@PathVariable("userId") int userId){
-        return cartService.getCartByUserId(userId);
+    @GetMapping("/getCart")
+    public ResponseEntity<Cart> getCart(HttpServletRequest request){
+        return new ResponseEntity<>(cartService.getCart(request), HttpStatus.OK);
     }
 
     //To get the cart item through cart item id
@@ -47,15 +52,15 @@ public class CartController {
     }
 
     //Changing item quantity using userId and productId
-    @PostMapping("{userId}/changeQuantity/{productId}")
+    @PostMapping("/{userId}/changeQuantity/{productId}")
     public CartItem changeQuantity2(@RequestBody Quantity data, @PathVariable("userId") int userId, @PathVariable("productId") int productId){
         return cartService.changeQuantity2(userId, productId, data.getQuantity());
     }
 
     //Remove Product from cart
-    @GetMapping("{userId}/remove/{productId}")
-    public String removeProduct(@PathVariable("userId") int userId,@PathVariable("productId") int productId){
-        return cartService.removeProduct(userId,productId);
+    @GetMapping("/remove/{productId}")
+    public Cart removeProduct(HttpServletRequest request,@PathVariable("productId") int productId){
+        return cartService.removeProduct(request,productId);
     }
 
 

@@ -1,16 +1,20 @@
 package com.CaseStudy.Service;
 
+import com.CaseStudy.Config.JwtUtil;
 import com.CaseStudy.Entities.Cart.Cart;
 import com.CaseStudy.Entities.Cart.CartItem;
 import com.CaseStudy.Entities.Product.Product;
 import com.CaseStudy.Entities.Product.ProductCategory;
 import com.CaseStudy.Entities.Product.ProductSubcategory;
+import com.CaseStudy.Entities.User.User;
 import com.CaseStudy.dao.ProductCategoryRepository;
 import com.CaseStudy.dao.ProductRepository;
 import com.CaseStudy.dao.ProductSubCategoryRepository;
+import com.CaseStudy.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +29,12 @@ public class HelperService {
 
     @Autowired
     private ProductCategoryRepository productCategoryRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
 
 
@@ -105,6 +115,13 @@ public class HelperService {
 
 
         return product;
+    }
+
+    public User fetchUserFromToken(HttpServletRequest request){
+        String requestTokenHeader = request.getHeader("Authorization");
+        String jwtToken = requestTokenHeader.substring(7);
+        String email = this.jwtUtil.extractUsername(jwtToken);
+        return userRepository.findByEmail(email);
     }
 
 //    public void upDateCategoryTable(ProductCategory category){
