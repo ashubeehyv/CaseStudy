@@ -25,12 +25,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
         CustomUserDetail customUserDetail = new CustomUserDetail(userRepository.findByEmail(username));
         return customUserDetail;
 
-//        if(username.equals("Ashutosh")){
-//            return new User("Ashutosh","password",new ArrayList<>());
-//        }
-//        else{
-//            throw new UsernameNotFoundException("User not found!!");
-//        }
 
     }
 }

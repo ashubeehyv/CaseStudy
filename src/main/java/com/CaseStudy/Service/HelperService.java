@@ -74,17 +74,6 @@ public class HelperService {
                 return cart;
 
             }
-            case ("removeProduct"): {
-                for (CartItem cartItem : cartItems) {
-                    if (cartItem.getProduct() == product) {
-                        cartItems.remove(cartItem);
-                        cart.setCartItems(cartItems);
-                        return cart;
-                    }
-                }
-                return new Cart();
-
-            }
         }
 
         return new Cart();
@@ -93,6 +82,8 @@ public class HelperService {
     public Product makeProperProduct(Product product){
         //Category Fixing
         ProductCategory category = product.getCategory();
+        /*Checking the above category is in my db or not if not I am adding else replacing this category with the existing
+          category. If not the db with category duplicate category with different id*/
         if(!productCategoryRepository.existsByCategoryName(category.getCategoryName())){
             product.setCategory(category);
         }
@@ -101,13 +92,16 @@ public class HelperService {
         }
 
         //SubCategory Fixing
+
         List<ProductSubcategory> subCategories = product.getSubcategories();
         List<ProductSubcategory> subcategoriesToAdd = new ArrayList<>();
         for(ProductSubcategory subCategory:subCategories){
             if(productSubCategoryRepository.existsBySubCategoryName(subCategory.getSubCategoryName())){
+                //If subcategory exists in db, adding the existing subcategory in the list
                 subcategoriesToAdd.add(productSubCategoryRepository.findBySubCategoryName(subCategory.getSubCategoryName()));
             }
             else{
+                //Here adding the subcategory as new
                 subcategoriesToAdd.add(subCategory);
             }
         }

@@ -58,9 +58,9 @@ public class CartController {
     }
 
     //Remove Product from cart
-    @GetMapping("/remove/{productId}")
-    public Cart removeProduct(HttpServletRequest request,@PathVariable("productId") int productId){
-        return cartService.removeProduct(request,productId);
+    @DeleteMapping("/remove/{id}")
+    public Cart removeProduct(HttpServletRequest request,@PathVariable("id") int cartItemId){
+        return cartService.removeProduct(request,cartItemId);
     }
 
 

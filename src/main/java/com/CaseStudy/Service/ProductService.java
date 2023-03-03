@@ -113,7 +113,4 @@ public class ProductService {
 
     }
 
-    public ProductCategory getCategory(String category){
-        return productCategoryRepository.findByCategoryName(category);
-    }
 }

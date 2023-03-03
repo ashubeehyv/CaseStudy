@@ -43,19 +43,16 @@ public class CartService {
         int userId = user.getUserId();
         if (cartRepository.findByUserId(userId) == null) {
             Cart cart = helperService.createNewCart(userId,productId);
-            Cart result = cartRepository.save(cart);
-            return result;
+            return cartRepository.save(cart);
         } else {
             Cart cart = cartRepository.findByUserId(userId);
             Cart updatedCart = helperService.updateCart(cart,productId,"addProduct");
             if(cart.getCartId() == updatedCart.getCartId()){
-                Cart result = cartRepository.save(updatedCart);
-                return result;
+                return cartRepository.save(updatedCart);
             }
 
             Cart updatedCart1 = helperService.updateCart(cart,productId,"addNewProduct");
-            Cart result = cartRepository.save(updatedCart1);
-            return result;
+            return cartRepository.save(updatedCart1);
         }
 
 
@@ -94,17 +91,15 @@ public class CartService {
         return null;
     }
 
-    public Cart removeProduct(HttpServletRequest request, int productId){
+    public Cart removeProduct(HttpServletRequest request, int cartItemId){
         User user = helperService.fetchUserFromToken(request);
         int userId = user.getUserId();
         Cart cart = cartRepository.findByUserId(userId);
-        Product product = productService.getProductById(productId);
-        Cart updatedCart = helperService.updateCart(cart,productId,"removeProduct");
-        if(cart.getCartId() == updatedCart.getCartId()){
-            Cart result = cartRepository.save(updatedCart);
-            return result;
-        }
+        CartItem cartItem = cartItemRepository.findById(cartItemId).get();
+        cart.getCartItems().remove(cartItem);
+        cartItemRepository.delete(cartItem);
         return cart;
+
     }
 
 }

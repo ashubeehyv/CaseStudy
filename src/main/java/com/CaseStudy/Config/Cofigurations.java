@@ -46,10 +46,6 @@ public class Cofigurations extends WebSecurityConfigurerAdapter {
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-//    @Bean
-//    public PasswordEncoder passwordEncoder(){
-//        return NoOpPasswordEncoder.getInstance();
-//    }
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider(){
@@ -79,12 +75,8 @@ public class Cofigurations extends WebSecurityConfigurerAdapter {
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().exceptionHandling().authenticationEntryPoint(entryPoint)
                 .and().csrf().disable();
-//                .antMatchers("/user/**").hasRole("ADMIN")
-//                .antMatchers("/**").permitAll().and().formLogin()
-//                .and().csrf().disable().cors().disable();
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
-//    .antMatchers("/admin/**").hasRole("ADMIN").antMatchers("/user/**").hasRole("USER")
 }

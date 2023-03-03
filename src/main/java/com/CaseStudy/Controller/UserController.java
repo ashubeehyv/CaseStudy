@@ -33,16 +33,10 @@ public class UserController {
 
     @GetMapping("/email/{getUserByEmail}")
     public ResponseEntity<User> getUserByEmail(@PathVariable("getUserByEmail") String email){
-        System.out.println("Hi");
         return new ResponseEntity<>(userService.getUserByEmail(email), HttpStatus.OK);
     }
 
-
-//    @PostMapping("/addUser")
-//    public String addUser(@RequestBody User user) {
-//        return userService.addUser(user);
-//    }
-
+    //for admin
     @PutMapping("/update/{id}")
     public String modifyUser(@PathVariable("id") int id, @RequestBody User modifiedUser) {
         return userService.updateUser(id, modifiedUser);
