@@ -18,6 +18,7 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.persistence.Tuple;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -108,8 +109,8 @@ public class ProductService {
         return productSubCategoryRepository.findAll();
     }
 
-    public List<Product> getFilteredProduct() {
-        return productRepository.getFilteredProducts();
+    public List<Product> getFilteredProduct(ProductFilter filter) {
+        return productRepository.getFilteredProducts(filter);
 
     }
 

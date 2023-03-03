@@ -6,6 +6,7 @@ import com.CaseStudy.Entities.Product.ProductSubcategory;
 import com.CaseStudy.Entities.User.User;
 
 import com.CaseStudy.Helper.LoginCredentials;
+import com.CaseStudy.Helper.ProductFilter;
 import com.CaseStudy.Helper.SignupData;
 import com.CaseStudy.Service.HomeService;
 
@@ -58,9 +59,9 @@ public class HomeController {
     }
 
     //Fetching all the products after applying filter
-    @GetMapping("/filteredProducts")
-    public List<Product> getFilteredProduct(){
-        return homeService.getFilteredProduct();
+    @PostMapping("/filteredProducts")
+    public List<Product> getFilteredProduct(@RequestBody ProductFilter filter){
+        return homeService.getFilteredProduct(filter);
     }
 
 

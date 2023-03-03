@@ -4,6 +4,7 @@ import com.CaseStudy.Entities.Product.Product;
 import com.CaseStudy.Entities.Product.ProductCategory;
 import com.CaseStudy.Entities.Product.ProductSubcategory;
 import com.CaseStudy.Helper.LoginCredentials;
+import com.CaseStudy.Helper.ProductFilter;
 import com.CaseStudy.Helper.SignupData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,8 +42,8 @@ public class HomeService {
         return productService.getAllSubCategories();
     }
 
-    public List<Product> getFilteredProduct(){
-        return productService.getFilteredProduct();
+    public List<Product> getFilteredProduct(ProductFilter filter){
+        return productService.getFilteredProduct(filter);
     }
 
     public User success(Principal principal) {
