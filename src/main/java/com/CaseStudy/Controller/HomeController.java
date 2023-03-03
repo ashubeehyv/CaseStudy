@@ -4,12 +4,10 @@ import com.CaseStudy.Entities.Product.Product;
 import com.CaseStudy.Entities.Product.ProductCategory;
 import com.CaseStudy.Entities.Product.ProductSubcategory;
 import com.CaseStudy.Entities.User.User;
-
-import com.CaseStudy.Helper.LoginCredentials;
-import com.CaseStudy.Helper.ProductFilter;
-import com.CaseStudy.Helper.SignupData;
+import com.CaseStudy.HelperClasses.LoginCredentials;
+import com.CaseStudy.HelperClasses.ProductFilter;
+import com.CaseStudy.HelperClasses.SignupData;
 import com.CaseStudy.Service.HomeService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

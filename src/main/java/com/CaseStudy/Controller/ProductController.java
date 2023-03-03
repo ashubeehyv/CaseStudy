@@ -5,8 +5,6 @@
 package com.CaseStudy.Controller;
 
 import com.CaseStudy.Entities.Product.Product;
-import com.CaseStudy.Entities.Product.ProductCategory;
-import com.CaseStudy.Entities.Product.ProductSubcategory;
 import com.CaseStudy.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

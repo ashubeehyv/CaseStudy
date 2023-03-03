@@ -1,7 +1,5 @@
-package com.CaseStudy.Helper;
+package com.CaseStudy.HelperClasses;
 
-import com.CaseStudy.Entities.Product.ProductCategory;
-import com.CaseStudy.Entities.Product.ProductSubcategory;
 
 public class ProductFilter {
     private String category;

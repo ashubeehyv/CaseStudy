@@ -1,7 +1,7 @@
 package com.CaseStudy.dao;
 
 import com.CaseStudy.Entities.Product.Product;
-import com.CaseStudy.Helper.ProductFilter;
+import com.CaseStudy.HelperClasses.ProductFilter;
 
 import java.util.List;
 

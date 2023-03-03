@@ -1,7 +1,6 @@
 package com.CaseStudy.Entities.Product;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class ProductCategory {

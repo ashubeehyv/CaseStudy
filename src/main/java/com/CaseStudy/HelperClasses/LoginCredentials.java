@@ -1,4 +1,4 @@
-package com.CaseStudy.Helper;
+package com.CaseStudy.HelperClasses;
 
 public class LoginCredentials {
     String userName;

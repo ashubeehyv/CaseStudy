@@ -3,13 +3,9 @@ package com.CaseStudy.dao;
 import com.CaseStudy.Entities.Product.Product;
 import com.CaseStudy.Entities.Product.ProductCategory;
 import com.CaseStudy.Entities.Product.ProductSubcategory;
-import com.CaseStudy.Helper.ProductFilter;
-import com.CaseStudy.Service.ProductService;
+import com.CaseStudy.HelperClasses.ProductFilter;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;

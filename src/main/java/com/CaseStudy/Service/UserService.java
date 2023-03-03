@@ -6,8 +6,8 @@ package com.CaseStudy.Service;
 
 
 import com.CaseStudy.Entities.User.User;
-import com.CaseStudy.Helper.LoginCredentials;
-import com.CaseStudy.Helper.SignupData;
+import com.CaseStudy.HelperClasses.LoginCredentials;
+import com.CaseStudy.HelperClasses.SignupData;
 import com.CaseStudy.dao.CartRepository;
 import com.CaseStudy.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

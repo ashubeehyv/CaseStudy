@@ -2,7 +2,7 @@ package com.CaseStudy.Controller;
 
 import com.CaseStudy.Config.JwtUtil;
 import com.CaseStudy.Config.UserDetailServiceImpl;
-import com.CaseStudy.Helper.LoginCredentials;
+import com.CaseStudy.HelperClasses.LoginCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
