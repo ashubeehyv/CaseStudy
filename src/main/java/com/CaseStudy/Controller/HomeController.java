@@ -26,41 +26,45 @@ public class HomeController {
     private HomeService homeService;
 
 
+    //Fetching User Profile after login but its using principal
     @RequestMapping("/")
     public User success(Principal principal) {
         return homeService.success(principal);
     }
 
+
+    //Fetching User Profile after login
     @GetMapping("/profile")
     public ResponseEntity<User> getUserByEmail(HttpServletRequest request){
         return new ResponseEntity<>(homeService.getUserProfile(request), HttpStatus.OK);
     }
 
-//    @GetMapping("/welcome")
-//    public String checking(){
-//        return "Authentication is working";
-//    }
-
+    //Fetching entire product
     @GetMapping("/products")
     public List<Product> getAllProducts() {
         return homeService.getAllProducts();
     }
 
+    //Fetching all categories
     @GetMapping("/categories")
     public List<ProductCategory> getAllCategories() {
         return homeService.getAllCategories();
     }
 
+    //Fetching all subCategories
     @GetMapping("/subCategories")
     public List<ProductSubcategory> getAllSubCategories() {
         return homeService.getAllSubCategories();
     }
 
+    //Fetching all the products after applying filter
     @GetMapping("/filteredProducts")
     public List<Product> getFilteredProduct(){
         return homeService.getFilteredProduct();
     }
 
+
+    //New user Signup
     @PostMapping("/signup")
     public LoginCredentials addUser(@RequestBody SignupData signupData){
         return homeService.addUser(signupData);

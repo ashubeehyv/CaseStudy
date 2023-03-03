@@ -1,6 +1,5 @@
 package com.CaseStudy.Service;
 
-import com.CaseStudy.Config.JwtUtil;
 import com.CaseStudy.Entities.Product.Product;
 import com.CaseStudy.Entities.Product.ProductCategory;
 import com.CaseStudy.Entities.Product.ProductSubcategory;
@@ -9,7 +8,6 @@ import com.CaseStudy.Helper.SignupData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.CaseStudy.Entities.User.User;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -27,9 +25,6 @@ public class HomeService {
     private ProductService productService;
 
     public User getUserProfile(HttpServletRequest request){
-//        String requestTokenHeader = request.getHeader("Authorization");
-//        String jwtToken = requestTokenHeader.substring(7);
-//        String email = this.jwtUtil.extractUsername(jwtToken);
         return helperService.fetchUserFromToken(request);
 
     }

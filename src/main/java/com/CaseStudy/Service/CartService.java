@@ -100,11 +100,9 @@ public class CartService {
         Cart cart = cartRepository.findByUserId(userId);
         Product product = productService.getProductById(productId);
         Cart updatedCart = helperService.updateCart(cart,productId,"removeProduct");
-        if(cart.getCartId() == updatedCart.getCartId()){
-            Cart result = cartRepository.save(updatedCart);
-            return result;
-        }
-        return cart;
+        Cart result = cartRepository.save(updatedCart);
+        return result;
+
     }
 
 }

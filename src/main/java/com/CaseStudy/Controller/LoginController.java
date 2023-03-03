@@ -16,7 +16,7 @@ import java.util.HashMap;
 
 @RestController
 @CrossOrigin("*")
-public class JwtController {
+public class LoginController {
 
     @Autowired
     private UserDetailServiceImpl userDetailServiceImpl;
@@ -28,7 +28,6 @@ public class JwtController {
 
     @PostMapping("/login")
     public ResponseEntity<?> generateToken(@RequestBody LoginCredentials loginCredentials) throws Exception {
-        System.out.println(loginCredentials);
         try{
             this.authenticationManager.authenticate((new UsernamePasswordAuthenticationToken(loginCredentials.getUserName(), loginCredentials.getPassword())));
 
@@ -44,15 +43,9 @@ public class JwtController {
 
         UserDetails userDetails = this.userDetailServiceImpl.loadUserByUsername(loginCredentials.getUserName());
         String token = this.jwtUtil.generateToken(userDetails);
-        System.out.println("JWT" + token);
         HashMap<String, String> response = new HashMap<>();
         response.put("token",token);
-
         return ResponseEntity.ok(response);
     }
 
-//    @GetMapping("/getUserName")
-//    public String getEmail(){
-//        return
-//    }
 }
