@@ -46,13 +46,8 @@ public class CartService {
             return cartRepository.save(cart);
         } else {
             Cart cart = cartRepository.findByUserId(userId);
-            Cart updatedCart = helperService.updateCart(cart,productId,"addProduct");
-            if(cart.getCartId() == updatedCart.getCartId()){
-                return cartRepository.save(updatedCart);
-            }
-
-            Cart updatedCart1 = helperService.updateCart(cart,productId,"addNewProduct");
-            return cartRepository.save(updatedCart1);
+            Cart updatedCart = helperService.updateCart(cart,productId);
+            return cartRepository.save(updatedCart);
         }
 
 

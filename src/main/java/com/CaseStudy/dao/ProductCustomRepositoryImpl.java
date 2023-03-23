@@ -7,10 +7,7 @@ import com.CaseStudy.HelperClasses.ProductFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,26 +24,50 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository{
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Product> cr = cb.createQuery(Product.class);
         Root<Product> root = cr.from(Product.class);
-        List<Product> result1 = new ArrayList<>();
+        Join<Product, ProductSubcategory> subcategories = root.joinList("subCategories", JoinType.INNER);
+        Predicate range = cb.between(root.get("price"), filter.getMinValue(), filter.getMaxValue());
         if(!filter.getCategory().equals("Select All")){
             ProductCategory category = productCategoryRepository.findByCategoryName(filter.getCategory());
             Predicate categoryFinder = cb.equal(root.get("category"),category);
-            Predicate range = cb.between(root.get("price"), filter.getMinValue(), filter.getMaxValue());
-            cr.select(root).where(cb.and(categoryFinder,range));
-            TypedQuery<Product> query = entityManager.createQuery(cr);
-            List<Product> result = query.getResultList();
+
+
             if(!filter.getSubCategory().equals("Select All")){
                 ProductSubcategory subcategory = productSubCategoryRepository.findBySubCategoryName(filter.getSubCategory());
-                List<Product> productsSubCat = subcategory.getProducts();
-                result.retainAll(productsSubCat);
+                Predicate subcategoryFinder = cb.equal(subcategories,subcategory);
+                cr.select(root).where(cb.and(categoryFinder,range,subcategoryFinder)).distinct(true);
+                TypedQuery<Product> query = entityManager.createQuery(cr);
+                List<Product> result = query.getResultList();
+                return result;
             }
+            cr.select(root).where(cb.and(categoryFinder,range)).distinct(true);
+            TypedQuery<Product> query = entityManager.createQuery(cr);
+            List<Product> result = query.getResultList();
             return result;
         }
         else {
-            cr.select(root).where(cb.between(root.get("price"), filter.getMinValue(), filter.getMaxValue()));
+            if(!filter.getSubCategory().equals("Select All")){
+                ProductSubcategory subcategory = productSubCategoryRepository.findBySubCategoryName(filter.getSubCategory());
+                Predicate subcategoryFinder = cb.equal(subcategories,subcategory);
+                cr.select(root).where(cb.and(range,subcategoryFinder)).distinct(true);
+                TypedQuery<Product> query = entityManager.createQuery(cr);
+                List<Product> result = query.getResultList();
+                return result;
+            }
+            cr.select(root).where(cb.between(root.get("price"), filter.getMinValue(), filter.getMaxValue())).distinct(true);
             TypedQuery<Product> query = entityManager.createQuery(cr);
-            return query.getResultList();
+            List<Product> result = query.getResultList();
+            return result;
 
         }
+    }
+
+    public List<Product> getSearchedProducts(String value){
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Product> cr = cb.createQuery(Product.class);
+        Root<Product> root = cr.from(Product.class);
+        cr.select(root).where(cb.like(root.get("name"),"%" + value +"%"));
+        TypedQuery<Product> query = entityManager.createQuery(cr);
+        List<Product> result = query.getResultList();
+        return result;
     }
 }

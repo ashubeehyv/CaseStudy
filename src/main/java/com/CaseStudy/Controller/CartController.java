@@ -6,7 +6,7 @@ package com.CaseStudy.Controller;
 
 import com.CaseStudy.Entities.Cart.Cart;
 import com.CaseStudy.Entities.Cart.CartItem;
-import com.CaseStudy.Entities.Quantity;
+import com.CaseStudy.HelperClasses.Quantity;
 import com.CaseStudy.Service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -4,6 +4,8 @@
  */
 package com.CaseStudy.Entities.User;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -21,6 +23,7 @@ public class User {
     
     private String email;
 
+    @JsonIgnore
     private String password;
 
     private String role;

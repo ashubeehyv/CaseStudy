@@ -104,4 +104,9 @@ public class ProductService {
 
     }
 
+    public List<Product> getSearchedProducts(String searchString) {
+        return productRepository.getSearchedProducts(searchString);
+
+    }
+
 }

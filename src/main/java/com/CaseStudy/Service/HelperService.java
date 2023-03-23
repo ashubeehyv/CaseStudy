@@ -50,33 +50,23 @@ public class HelperService {
         return cart;
     }
 
-    public Cart updateCart(Cart cart, int productId, String operation) {
+    public Cart updateCart(Cart cart, int productId) {
         List<CartItem> cartItems = cart.getCartItems();
         Product product = productRepository.findById(productId).get();
-        switch (operation) {
-            case ("addProduct"): {
-                for (CartItem cartItem : cartItems) {
-                    if (cartItem.getProduct() == product) {
-                        cartItem.setQuantity(cartItem.getQuantity() + 1);
-                        cart.setCartItems(cartItems);
-                        return cart;
-                    }
-                }
-                return new Cart();
-
-            }
-            case("addNewProduct"):{
-                CartItem cartItem = new CartItem();
-                cartItem.setQuantity(1);
-                cartItem.setProduct(product);
-                cartItems.add(cartItem);
+        for (CartItem cartItem : cartItems) {
+            if (cartItem.getProduct() == product) {
+                cartItem.setQuantity(cartItem.getQuantity() + 1);
                 cart.setCartItems(cartItems);
                 return cart;
-
             }
         }
 
-        return new Cart();
+        CartItem newcartItem = new CartItem();
+        newcartItem.setQuantity(1);
+        newcartItem.setProduct(product);
+        cartItems.add(newcartItem);
+        cart.setCartItems(cartItems);
+        return cart;
     }
 
     public Product makeProperProduct(Product product){

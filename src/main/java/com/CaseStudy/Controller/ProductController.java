@@ -50,8 +50,15 @@ public class ProductController {
     }
 
     @GetMapping("/subcategory/{subCategoryName}")
-    public List<Product> getProductsBySubCategory(@PathVariable("subCategoryName") String categoryName) {
-        return productService.getProductsBySubCategory(categoryName);
+    public List<Product> getProductsBySubCategory(@PathVariable("subCategoryName") String subcategoryName) {
+        return productService.getProductsBySubCategory(subcategoryName);
     }
+
+    @GetMapping("/{searchString}")
+    public List<Product> getProductsBySearchString(@PathVariable("searchString") String searchString) {
+        return productService.getSearchedProducts(searchString);
+    }
+
+
 
 }

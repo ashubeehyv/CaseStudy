@@ -63,9 +63,9 @@ public class Cofigurations extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers(HttpMethod.OPTIONS, "/cart/**").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/cart/**","/order/**").permitAll()
                 .antMatchers("/login","/signup").permitAll()
-                .antMatchers("/products","/categories","/subCategories").permitAll()
+                .antMatchers("/products","/categories","/subCategories","/filteredProducts","/product/**").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().exceptionHandling().authenticationEntryPoint(entryPoint)
